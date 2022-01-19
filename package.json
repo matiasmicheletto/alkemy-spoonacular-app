@@ -1,0 +1,39 @@
+{
+  "name": "alkemy-spoonacular-app",
+  "version": "1.0.0",
+  "description": "Challenge Alkemy: Una aplicación para crear una carta de opciones de menús para un hotel",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matiasmicheletto/alkemy-spoonacular-app.git"
+  },
+  "keywords": [
+    "challenge",
+    "alkemy",
+    "spoonakular",
+    "react"
+  ],
+  "author": "Matias Micheletto",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/matiasmicheletto/alkemy-spoonacular-app/issues"
+  },
+  "homepage": "https://github.com/matiasmicheletto/alkemy-spoonacular-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0"
+  }
+}
