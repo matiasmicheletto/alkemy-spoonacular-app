@@ -1,0 +1,52 @@
+.BtnRnd {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    height: 50px;
+    width: 50px;
+    animation: pulse 2s infinite, magnified 1s infinite;
+}
+
+.BtnRnd:hover {
+    animation: none !important;
+}
+
+.BtnContainer {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(21, 115, 71, 0.9);
+    }
+
+    70% {
+        -webkit-box-shadow: 0 0 0 15px rgba(21, 115, 71, 0.1);
+    }
+
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(21, 115, 71, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(21, 115, 71, 0.9);
+        box-shadow: 0 0 0 0 rgba(21, 115, 71, 0.9);
+    }
+
+    70% {
+        -moz-box-shadow: 0 0 0 15px rgba(21, 115, 71, 0.1);
+        box-shadow: 0 0 0 15px rgba(21, 115, 71, 0.1);
+    }
+
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(21, 115, 71, 0);
+        box-shadow: 0 0 0 0 rgba(21, 115, 71, 0);
+    }
+}
