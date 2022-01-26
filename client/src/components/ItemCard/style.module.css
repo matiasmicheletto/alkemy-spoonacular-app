@@ -1,0 +1,37 @@
+.Card {    
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.Card:hover{
+    box-shadow: 0px 0px 20px 0px lightgray;
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+
+.CardImg {
+    padding: 10px;
+    filter: opacity(0.5);
+}
+
+.CardBody {
+    padding: 15px;
+}
+
+.CardFooter {
+    text-align: center;    
+    padding: 5px 20px 5px 20px;
+}
+
+.ActionButton {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+    filter: grayscale(.5);
+}
+
+.ItemData td{
+    border: none;
+    line-height: 0.2em;
+}
