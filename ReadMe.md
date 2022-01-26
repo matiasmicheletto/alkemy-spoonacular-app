@@ -1,5 +1,34 @@
 # Challenge front-end Alkemy: React
 
+<p align="">
+    <img src="https://img.shields.io/github/license/matiasmicheletto/alkemy-spoonacular-app">
+    <img src="https://img.shields.io/github/package-json/v/matiasmicheletto/alkemy-spoonacular-app">
+</p>
+
+## Instalación
+
+Para ejecutar la aplicación, es necesario instalar las dependencias, configurar variables de entorno (reemplazar '?????' por la correspondiente api key de Spoonacular) y compilar.
+
+```bash
+git clone https://github.com/matiasmicheletto/alkemy-spoonacular-app.git # Clonar repositorio
+cd alkemy-spoonacular-app/client # Ir a carpeta del frontend
+# Agregar variables de entorno
+cat > .env << EOF
+REACT_APP_API_KEY=?????
+REACT_APP_API_URL=https://api.spoonacular.com/recipes/complexSearch
+REACT_APP_LOGIN_URL=http://challenge-react.alkemy.org/
+EOF
+npm install # Instalar dependencias frontend
+npm run build # Compilar version optimizada produccion
+cd .. # Volver a carpeta root
+npm install # Instalar dependencias backend
+npm start # Iniciar el servidor (puerto 3000)
+```
+
+
+![clean](doc/cleancode.png)
+
+
 ## Objetivo
 
 Desarrollar una aplicación para crear una carta de opciones de menús para un hotel que consumirá una API externa y mostrará diferentes atributos a nivel individual de cada plato y del menú finalizado.
