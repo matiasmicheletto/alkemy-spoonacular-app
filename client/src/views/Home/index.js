@@ -28,7 +28,6 @@ const Home = props => {
 		}
 	};
 
-
     return (
         <Container className={classes.Container}>
             {loading && <Preloader />}

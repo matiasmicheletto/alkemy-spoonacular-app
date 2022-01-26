@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, FloatingLabel, Card } from 'react-bootstrap';
 import { login, useAuthState, useAuthDispatch, LoadingContext } from '../../context';
 import { useFormik } from 'formik';
 import classes from './style.module.css';
@@ -48,40 +48,72 @@ const Login = () => {
         }
     });
 
-    return (
+    return (        
         <Container className={classes.Container}>
+            <div className={classes.Background}></div>
             {loading && <Preloader />}
-            <center>
-                <h1>Welcome!</h1>
-                <Form onSubmit={formik.handleSubmit} className={classes.Form}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control 
-                            type="email"
-                            name="email" 
-                            placeholder="Enter email" 
-                            disabled={authLoading}
-                            onChange={formik.handleChange} 
-                            value={formik.values.email} />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
-                    </Form.Group>
-                    
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control 
-                            type="password"
-                            name="password" 
-                            placeholder="Password" 
-                            disabled={authLoading}
-                            onChange={formik.handleChange} 
-                            value={formik.values.password} />                            
-                    </Form.Group>
-                    <Button type="submit" variant="success" disabled={authLoading}>Login</Button>
-                </Form>
-                {errorMessage ? <p className={classes.ErrorMsg}>{errorMessage}</p> : null}
-            </center>
+            <h1 className={classes.Title}>Welcome!</h1>
+            <Row>
+                <Col sm={1} md={3}></Col>
+                <Col sm={10} md={6}>
+                    <Card className={classes.Card}>
+                        <Card.Body>
+                            <Form onSubmit={formik.handleSubmit} className={classes.Form}>
+                                <Form.Group className="mb-3" controlId="formEmail">
+                                    <FloatingLabel
+                                        controlId="formEmail"
+                                        label="Email address"
+                                        className="mb-3">
+                                        <Form.Control 
+                                            type="email"
+                                            name="email" 
+                                            placeholder="Enter email" 
+                                            disabled={authLoading}
+                                            onChange={formik.handleChange} 
+                                            value={formik.values.email} />
+                                        <Form.Text className={classes.MutedText}>
+                                            We'll never share your email with anyone else.
+                                        </Form.Text>
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formPassword">
+                                    <FloatingLabel
+                                        controlId="formPassword"
+                                        label="Password"
+                                        className="mb-3">
+                                        <Form.Control 
+                                            type="password"
+                                            name="password" 
+                                            placeholder="Password" 
+                                            disabled={authLoading}
+                                            onChange={formik.handleChange} 
+                                            value={formik.values.password} />
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <center>
+                                    <Button 
+                                        type="submit" 
+                                        variant="success" 
+                                        disabled={authLoading} 
+                                        className={classes.LoginBtn}>
+                                            Login
+                                    </Button>
+                                </center>
+                                <Row>
+                                    <Button 
+                                        variant="link" 
+                                        disabled={authLoading} 
+                                        className={classes.RetrievePassBtn}>
+                                            Forgot password?
+                                    </Button>
+                                </Row>
+                            </Form>
+                            {errorMessage ? <p className={classes.ErrorMsg}>{errorMessage}</p> : null}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col sm={1} md={3}></Col>
+            </Row>
         </Container>
     );
 

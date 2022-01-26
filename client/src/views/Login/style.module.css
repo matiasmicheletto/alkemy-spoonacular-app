@@ -1,21 +1,52 @@
+.Background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../../img/login_background2.jpg");
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .Container {
-    margin-top: 50px;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.Title {
+    position: relative;
+    color: white;
+}
+
+.Card {
+    background-color: rgba(220,220,220, 0.6);
 }
 
 .Form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 100%;
-    background-color: #f0f0f0;
-    border: 1px solid #e0e0e0;
-    padding: 20px;
+    margin: 50px 10px 20px 10px;
+}
+
+.MutedText {
+    color: white;
 }
 
 .ErrorMsg {
     color: red;
     font-size: 12px;
     margin-top: 10px;
+}
+
+.LoginBtn {
+    margin-top: 15px;
+    width: 75%;
+}
+
+.RetrievePassBtn {
+    margin-top: 10px;
+    text-align: right;
+    font-size: small;
 }

@@ -1,3 +1,5 @@
+
+// This component displays info about a single menu dish
 const ItemCard = props => (
     <div key={props.item.id}>
         <h2>{props.item.title}</h2>           

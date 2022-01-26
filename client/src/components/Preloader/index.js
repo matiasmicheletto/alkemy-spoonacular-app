@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner } from 'react-bootstrap';
 import classes from './style.module.css';
 
+// Full screen preloader
 const Preloader = () => (
     <div className={classes.Container}>
         <div className={classes.SpinnerContainer}>
