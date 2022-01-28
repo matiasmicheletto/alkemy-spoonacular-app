@@ -18,7 +18,7 @@ class Server {
   }
 
   routes() {    
-    this.app.get("/", (req, res) => {
+    this.app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../client/build/index.html"));
     });    
   }

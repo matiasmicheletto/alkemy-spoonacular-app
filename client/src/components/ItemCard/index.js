@@ -17,9 +17,7 @@ const ItemCard = props => {
     return (
         <Card className={classes.Card}>
             <Card.Header className={classes.CardHeader} >
-                <div
-                    style={{padding:0}}
-                    title={title}
+                <div title={title}
                     className={classes.CardTitle} 
                     style={{color: title ? vegan ? 'green':'darkred' : 'black' }}
                     onClick={handleItemView}>

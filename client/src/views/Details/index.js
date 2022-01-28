@@ -28,7 +28,7 @@ const Details = () => {
             {recipe && 
             <Card className={classes.Card}>
                 <Card.Body>
-                    <img className={classes.Image} src={recipe.image} />                    
+                    <img className={classes.Image} src={recipe.image} alt={recipe.title}/>                    
                     <h3 className={classes.Title}>{recipe.title}</h3>
                     <div className={classes.Stats}>
                         <div className={classes.BadgesContainer}>
