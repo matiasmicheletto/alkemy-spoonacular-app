@@ -5,6 +5,7 @@ import { login, useAuthState, useAuthDispatch, LoadingContext } from '../../cont
 import { useFormik } from 'formik';
 import classes from './style.module.css';
 import Preloader from '../../components/Preloader';
+import swal from 'sweetalert';
 
 const Login = () => {
     
@@ -34,16 +35,22 @@ const Login = () => {
                 console.log(error);
             }
         },
+        validateOnChange: false,
         validate: values => {
             let errors = {};
-            if(!values.password)
+            if(!values.password){
                 errors.password = 'Required!';
-            if(!values.email)
+                swal("Error", "Password is required!", "warning");
+            }
+            if(!values.email){
                 errors.email= 'Required!';
-            else 
+                swal("Error", "Email is required!", "warning");
+            }else {
                 if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(values.email)){
                     errors.email = 'Invalid email format!'
+                    swal("Error", "Invalid email format!", "warning");
                 }
+            }
             return errors;
         }
     });

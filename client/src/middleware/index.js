@@ -60,20 +60,20 @@ export default class Middleware {
     }
 
     getRecipe(id) {
+        if(id){
+            const idMatch = item => item?.id.toString() === id.toString();
 
-        const recipeId = Number.toString(id);
-
-        // First check if recipe is in last search
-        if("results" in this.lastSearch && this.lastSearch.results.length > 0){
-            const index = this.lastSearch.results.findIndex(item => Number.toString(item.id) === recipeId);
+            // First check if recipe is in last search
+            if("results" in this.lastSearch && this.lastSearch.results.length > 0){
+                const index = this.lastSearch.results.findIndex(idMatch);
+                if(index > -1)
+                    return this.lastSearch.results[index];
+            }
+            // If not, search in current menu
+            const index = this.currentMenu.findIndex(idMatch);
             if(index > -1)
-                return this.lastSearch.results[index];
+                return this.currentMenu[index];
         }
-        // If not, search in current menu
-        const index = this.currentMenu.findIndex(item => Number.toString(item?.id) === recipeId);
-        if(index > -1)
-            return this.currentMenu[index];
-        // If not found, return null
         return null;
     }
 

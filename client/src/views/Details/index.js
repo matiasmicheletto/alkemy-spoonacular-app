@@ -11,12 +11,19 @@ const Details = () => {
     const middleware  = useContext(MiddlewareContext);
     const recipe = middleware.getRecipe(recipeId);
 
+    console.log(recipe);
+
     return (
         <Container className={classes.Container}>            
             <TopNavbar />            
-            <Row className={classes.CardContainer}>
-                <Card>{JSON.stringify(recipe)}</Card>
-            </Row>
+            {recipe && <Card>
+                <Card.Header>
+                    <Card.Title>{recipe.title}</Card.Title>
+                </Card.Header>
+                <Card.Img variant="top" src={recipe.image} />
+                <Card.Body>
+                </Card.Body>
+            </Card>}
         </Container>
     );
 };
