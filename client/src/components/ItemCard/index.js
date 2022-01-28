@@ -1,60 +1,82 @@
 import { Button, Card, Row, Col, Table } from 'react-bootstrap';
-import { FaEye, FaPlus, FaRedo, FaTrashAlt } from 'react-icons/fa';
+import { FaCartPlus, FaDollarSign, FaEye, FaHeart, FaRedo, FaSearch, FaTrashAlt } from 'react-icons/fa';
+import dishImage from '../../img/dish.png';
 import classes from './style.module.css';
 
-const ItemCard = props => (
-    <Card className={classes.Card}>
-        <Card.Img variant="top" src={props.item.image} className={classes.CardImg}/>
-        <Card.Body className={classes.CardBody}>
-            <Card.Title>{props.item.title}</Card.Title>            
-            <Table hover className={classes.ItemData}>
-                <tbody>
-                    <tr>
-                        <td><b>Price:</b></td>
-                        <td>{props.item.price}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Health Score:</b></td>
-                        <td>{props.item.healthScore}</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </Card.Body>
-        <Card.Footer className={classes.CardFooter}>
-            <Row>
-                <Col xs={4}>
-                    <Button  
-                        title="View details"
-                        className={classes.ActionButton} 
-                        variant="primary" 
-                        disabled={!props.item.defined}>
-                        <FaEye size={25} />
-                    </Button>
-                </Col>
-                <Col xs={4}>
-                    <Button 
-                        title={props.item.defined ? "Search recipe" : "Replace recipe"}
-                        className={classes.ActionButton} 
-                        variant="success">
-                        {props.item.defined ? 
-                            <FaRedo size={25} />
-                        :
-                            <FaPlus size={25} />
-                        }
-                    </Button>
-                </Col>
-                <Col xs={4}>
-                    <Button 
-                        title="Delete recipe"
-                        className={classes.ActionButton} 
-                        variant="danger"
-                        disabled={!props.item.defined}>
-                        <FaTrashAlt size={25} />    
-                    </Button>
-                </Col>
-            </Row>
-        </Card.Footer>
-    </Card>
-);
+const ItemCard = props => {
+
+    const {title, image, pricePerServing, healthScore, vegan} = props.item? props.item : {};
+
+    return (
+        <Card className={classes.Card}>
+            <Card.Header className={classes.CardHeader}>
+                <p className={classes.CardTitle} style={{color: title ? vegan ? 'green':'darkred' : 'black' }}>
+                    {title || 'Empty dish'}
+                </p>
+            </Card.Header>
+            <Card.Img variant="top" src={image || dishImage} className={title ? "" : classes.EmptyCardImg}/>
+            <Card.Body className={classes.CardBody}>            
+                {pricePerServing && healthScore && <Table hover className={classes.ItemData}>
+                    <tbody>
+                        <tr title="Price">
+                            <td><FaDollarSign/></td>
+                            <td style={{textAlign:"right"}}>${pricePerServing}</td>
+                        </tr>
+                        <tr title="Health score">
+                            <td><FaHeart/></td>
+                            <td style={{textAlign:"right"}}>{healthScore}</td>
+                        </tr>
+                    </tbody>
+                </Table>}
+            </Card.Body>
+            <Card.Footer className={classes.CardFooter}>
+                <Row>
+                    {props.onView && <Col>
+                        <Button  
+                            title="View details"                        
+                            className={classes.ActionButton} 
+                            variant="primary" 
+                            disabled={!title}
+                            onClick={props.onView}>
+                            <FaEye size={25} />
+                        </Button>
+                    </Col>}
+                    {props.onSearch && <Col>
+                        <Button 
+                            title={title ? "Search recipe" : "Replace recipe"}
+                            className={classes.ActionButton} 
+                            variant="success"
+                            onClick={props.onSearch}>
+                            {title ? 
+                                <FaRedo size={25} />
+                            :
+                                <FaSearch size={25} />
+                            }
+                        </Button>
+                    </Col>}
+                    {props.onClear && <Col>
+                        <Button 
+                            title="Delete recipe"
+                            className={classes.ActionButton} 
+                            variant="danger"
+                            disabled={!title}
+                            onClick={props.onClear}>
+                            <FaTrashAlt size={25} />    
+                        </Button>
+                    </Col>}
+                    {props.onAdd && <Col>
+                        <Button 
+                            title="Add this recipe to the menu"
+                            className={classes.ActionButton} 
+                            variant="success"                        
+                            onClick={props.onAdd}>
+                            <FaCartPlus size={25} />    
+                        </Button>
+                    </Col>}
+                </Row>
+            </Card.Footer>
+        </Card>
+    );
+};
 
 export default ItemCard;

@@ -1,16 +1,7 @@
 import axios from 'axios';
 import recipes_response from './recipes_response.json';
-import dishImage from '../img/dish.png';
 
 const MAX_RECIPES = 4; // Max dishes per menu
-const ITEM_TEMPLATE = (_, index) => ({
-    id: index,
-    defined: false,
-    image: dishImage,
-    title: 'Empty dish',
-    price: '-',
-    healthScore: '-'
-});
 
 export default class Middleware {
 
@@ -18,22 +9,29 @@ export default class Middleware {
         this.debug = true; // or use process.env.NODE_ENV === "development"
         this.api_url = `${process.env.REACT_APP_API_URL}complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true`;
         this.veganDishesCnt = null; // Vegan dishes counter (should be 2)
+        this.nonEmptyDishes = 0; // Enabled dishes counter
         this.totalPrice = null;
         this.averageHealthScore = null;
-        this.currentMenu = JSON.parse(localStorage.getItem('currentMenu')) || Array(MAX_RECIPES).fill(null).map(ITEM_TEMPLATE); 
+        this.currentMenu = JSON.parse(localStorage.getItem('currentMenu')) || Array(4).fill(null); 
+        this.lastSearch = JSON.parse(localStorage.getItem('lastSearch')) || [];
         this.updateStats();
     }
 
     updateStats() {
-        this.veganDishesCnt = this.currentMenu.filter(item => item.vegan).length;
-        this.totalPrice = this.currentMenu.reduce((acc, item) => acc + parseFloat(item.price), 0);
-        this.averageHealthScore = this.currentMenu.reduce((acc, item) => acc + parseFloat(item.healthScore), 0) / this.currentMenu.length;
+        this.nonEmptyDishes = this.currentMenu.filter(item => item?.title).length;
+        if(this.nonEmptyDishes > 0){
+            this.veganDishesCnt = this.currentMenu.filter(item => item?.vegan).length;
+            this.totalPrice = this.currentMenu.reduce((acc, item) => acc + (parseFloat(item?.pricePerServing) || 0), 0);
+            this.averageHealthScore = this.currentMenu.reduce((acc, item) => acc + (parseFloat(item?.healthScore) || 0), 0) / this.nonEmptyDishes;
+        }        
     }
 
-    searchRecipes() {
+    searchRecipes(query, vegan) {
         return new Promise((fulfill, reject)=>{
             if(this.debug){ // Simulated api response
                 setTimeout(()=>{
+                    this.lastSearch = recipes_response;
+                    localStorage.setItem('lastSearch', JSON.stringify(recipes_response));
                     fulfill(recipes_response);
                 }, 1000);
             }else{ // Api call (uses cost points)
@@ -41,6 +39,8 @@ export default class Middleware {
                 { params:{} })
                 .then(res => {
                     console.log(res);
+                    this.lastSearch = res.data;
+                    localStorage.setItem('lastSearch', JSON.stringify(res.data));
                     fulfill(res.data);
                 })
                 .catch(err => {
@@ -55,26 +55,58 @@ export default class Middleware {
         return this.currentMenu;
     }
 
-    setMenuRecipe(recipe, index) {
-        if(index >= 0 && index < MAX_RECIPES){
-            // TODO: check recipe type
-            this.currentMenu.splice(index, 0, recipe);
+    getLastSearch() {
+        return this.lastSearch;
+    }
+
+    getRecipe(id) {
+
+        const recipeId = Number.toString(id);
+
+        // First check if recipe is in last search
+        if("results" in this.lastSearch && this.lastSearch.results.length > 0){
+            const index = this.lastSearch.results.findIndex(item => Number.toString(item.id) === recipeId);
+            if(index > -1)
+                return this.lastSearch.results[index];
+        }
+        // If not, search in current menu
+        const index = this.currentMenu.findIndex(item => Number.toString(item?.id) === recipeId);
+        if(index > -1)
+            return this.currentMenu[index];
+        // If not found, return null
+        return null;
+    }
+
+    getVeganDishesCnt() {
+        return this.veganDishesCnt;
+    }
+
+    getAvgHealthScore(decimals = 2) {
+        return this.averageHealthScore.toFixed(decimals);
+    }
+
+    getTotalPrice(decimals = 2) {
+        return this.totalPrice.toFixed(decimals);
+    }
+
+    setMenuRecipe(recipe, index) {        
+        if(index > -1 && index < MAX_RECIPES){
+            // TODO: check recipe 
+            this.currentMenu[index] = recipe;
             this.updateStats();
             localStorage.setItem('currentMenu', JSON.stringify(this.currentMenu));
             return {status: "success"};
         }else
-            return {status: "error", message: "Invalid index!"};
-        
+            return {status: "error", message: "Invalid recipe index!"};
     }
 
-    removeRecipeFromMenu(recipeId) {
-        const index = this.currentMenu.findIndex(recipe => recipe.id === recipeId);
-        if(index > -1){
-            this.currentMenu.splice(index, 1);
+    clearRecipe(index) {
+        if(index > -1 && index < MAX_RECIPES){
+            this.currentMenu[index] = null;
             localStorage.setItem('currentMenu', JSON.stringify(this.currentMenu));
             return {status: "success"};
         }else
-            return {status: "error", message: "Recipe not found!"};
+            return {status: "error", message: "Invalid recipe index!"};
     }
 
 };

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Navbar, Nav, Modal, Button } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { FaInfo, FaPowerOff, FaQuestion } from 'react-icons/fa';
+import { InfoModal, HelpModal } from '../../modals';
 import { logout, useAuthDispatch } from '../../context';
 import classes from './style.module.css';
 
@@ -25,47 +26,20 @@ const TopNavbar = props => {
         <Navbar bg="dark" variant="dark" fixed="top" className={classes.Navbar}>      
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />   
             <Navbar.Collapse className="justify-content-end">
-                <Nav>
+                <Nav className={classes.Nav}>
                     <Nav.Link title="About" onClick={()=>setShowInfo(true)}>
-                        <FaInfo />
+                        <FaInfo size={25}/>
                     </Nav.Link>
                     <Nav.Link title="Help" onClick={()=>setShowHelp(true)}>
-                        <FaQuestion />
+                        <FaQuestion size={25}/>
                     </Nav.Link>
                     <Nav.Link title="Logout" onClick={handleLogout}>
-                        <FaPowerOff />
+                        <FaPowerOff size={25}/>
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>      
-            
-            <Modal centered show={showInfo} onHide={()=>setShowInfo(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>About this software</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={()=>setShowInfo(false)}>
-                        Ok
-                    </Button>                    
-                </Modal.Footer>
-            </Modal>
-
-            <Modal centered show={showHelp} onHide={()=>setShowHelp(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Help</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={()=>setShowHelp(false)}>
-                        Ok
-                    </Button>                    
-                </Modal.Footer>
-            </Modal>
-
+            <InfoModal show={showInfo} onHide={()=>setShowInfo(false)}/>
+            <HelpModal show={showHelp} onHide={()=>setShowHelp(false)}/>
         </Navbar>  
     );
 };

@@ -3,19 +3,30 @@
     margin-bottom: 15px;
 }
 
-.Card:hover{
+.Card:hover {
     box-shadow: 0px 0px 20px 0px lightgray;
     transform: scale(1.02);
     transition: all 0.3s ease-in-out;
 }
 
-.CardImg {
-    padding: 10px;
+.CardHeader {
+    height: 40px;    
+    font-weight: bold;
+}
+
+.CardTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.EmptyCardImg {    
     filter: opacity(0.5);
+    padding: 10px;
 }
 
 .CardBody {
-    padding: 15px;
+    padding: 10px;
 }
 
 .CardFooter {
@@ -25,13 +36,18 @@
 
 .ActionButton {
     border-radius: 50%;
-    height: 40px;
+    height: 40px; 
     width: 40px;
     padding: 0px;
     filter: grayscale(.5);
 }
 
+.ItemData {
+    margin: 0;
+    padding: 0;
+}
+
 .ItemData td{
-    border: none;
-    line-height: 0.2em;
+    border: none; 
+    line-height: 1;
 }
