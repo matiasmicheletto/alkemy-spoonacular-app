@@ -8,14 +8,14 @@ const MAX_NON_VEGAN_RECIPES = 2; // Max non-vegan dishes per menu
 export default class Middleware {
 
     constructor() {
-        this.debug = true; // or use process.env.NODE_ENV === "development"
+        this.debug = false; // or use process.env.NODE_ENV === "development"
         this.api_url = `${process.env.REACT_APP_API_URL}complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&addRecipeInformation=true`;
         this.selected = null; // Menu slot selected for view, set, clear or replace
         this.nonEmptyDishes = 0; // Used menu slots counter
-        this.veganDishesCnt = null; // Vegan dishes counter (should be max 2)
-        this.nonVeganDishesCnt = null; // Non-vegan dishes counter (should be max 2)
-        this.totalPrice = null;
-        this.averageHealthScore = null;
+        this.veganDishesCnt = 0; // Vegan dishes counter (should be max 2)
+        this.nonVeganDishesCnt = 0; // Non-vegan dishes counter (should be max 2)
+        this.totalPrice = 0;
+        this.averageHealthScore = 0;
         this.currentMenu = JSON.parse(localStorage.getItem('currentMenu')) || Array(4).fill(null); 
         this.lastSearch = JSON.parse(localStorage.getItem('lastSearch')) || [];
         this.updateStats();
@@ -40,10 +40,10 @@ export default class Middleware {
                     fulfill(recipes_response);
                 }, 1000);
             }else{ // Api call (uses cost points)
-                axios.get(this.url,
-                { params:{} })
+                const url = `${this.api_url}&query=${query}${vegan ? "&diet=vegan":""}`;                                
+                axios.get(url)
                 .then(res => {
-                    console.log(res);
+                    //console.log(res);
                     this.lastSearch = res.data;
                     localStorage.setItem('lastSearch', JSON.stringify(res.data));
                     fulfill(res.data);
@@ -107,7 +107,7 @@ export default class Middleware {
 
     setMenuRecipe(recipe, index) {        
         if(index < 0 || index > MAX_RECIPES) // Check if index is valid
-            return {status: "error", message: "Invalid index"};
+            return {status: "error", message: "The menu slot is invalid, go back to menu and try again!"};
         
         // Check if recipe is already in the menu
         const idMatch = item => item?.id.toString() === recipe.id.toString();
@@ -117,7 +117,7 @@ export default class Middleware {
 
         // In case of replace, check if it has the same type (vegan or non-vegan)
         let updateSame = false;
-        if(this.currentMenu[index].title) // Recipe is already in the menu, but we want to replace it
+        if(this.currentMenu[index]?.title) // Recipe is already in the menu, but we want to replace it
             updateSame = this.currentMenu[index].vegan === recipe.vegan;
 
         if(this.veganDishesCnt === MAX_VEGAN_RECIPES && recipe.vegan && !updateSame) // Check if vegan dish is allowed

@@ -1,14 +1,12 @@
 import SimpleModal from '../SimpleModal';
-import InlineButton from '../../components/InlineButton';
 
 const HelpModal = props => (
     <SimpleModal {...props} title="Help">
-        Search and add recipes using the <InlineButton type="search" /> button under each dish chard. 
-        Only two vegan dishes and two non vegan dishes can be added.
+        The menu is composed of recipes. Each recipe has a title, an image, a price per serving and a health score.
         <br />
-        To see details, hit the <InlineButton type="view" /> button. 
+        Search recipes by title and add them to the menu. Only two vegan recipes and two non vegan recipes are allowed at the same time.
         <br />
-        When clicking on <InlineButton type="clear" />, the corresponding dish will be emptied. 
+        The menu can be edited at any time, and the total price, average health score and vegan dishes count are displayed in the top section.
     </SimpleModal>
 );
 

@@ -6,15 +6,16 @@ export async function login(dispatch, loginPayload) {
 	};
 	try {
 		dispatch({ type: 'REQUEST_LOGIN' });
-		let response = await fetch(process.env.REACT_APP_LOGIN_URL, requestOptions);
-		let data = await response.json();
-		if (data.token) {
-			dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-			localStorage.setItem('currentUser', JSON.stringify(data));			
-			return data;
+		let response = await fetch(process.env.REACT_APP_LOGIN_URL, requestOptions);		
+		if (response.status === 200) {
+			let data = await response.json();
+			if (data.token) {
+				dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+				localStorage.setItem('currentUser', JSON.stringify(data));			
+				return data;
+			}
 		}
-		dispatch({ type: 'LOGIN_ERROR', error: data.error });
-		console.log(data.error);
+		dispatch({ type: 'LOGIN_ERROR', error: 'Wrong username or password' });		
 		return;
 	} catch (error) {
 		dispatch({ type: 'LOGIN_ERROR', error: error });
@@ -24,6 +25,5 @@ export async function login(dispatch, loginPayload) {
 
 export async function logout(dispatch) {
 	dispatch({ type: 'LOGOUT' });
-	localStorage.removeItem('currentUser');
-	localStorage.removeItem('token');
+	localStorage.removeItem('currentUser');	
 }

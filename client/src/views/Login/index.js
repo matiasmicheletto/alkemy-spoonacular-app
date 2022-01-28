@@ -24,11 +24,16 @@ const Login = () => {
             try {
                 login(dispatch, values)
                 .then(response => {
-                    if(response)
-                        if("token" in response){ 
-                            setLoading(false);
+                    setLoading(false);
+                    if(response){
+                        if(response.token){
                             navigate('/home');
                         }
+                    }
+                })
+                .catch(error => {
+                    swal("Error", "Something went wrong, please try again later", "error");
+                    setLoading(false);
                 });
             } catch (error) {
                 setLoading(false);

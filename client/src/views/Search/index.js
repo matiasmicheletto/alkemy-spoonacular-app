@@ -33,8 +33,13 @@ const Search = () => {
         },
         onSubmit: values => {
             setLoading(true);
-            middleware.searchRecipes(values.query, values.check).then(response => {
+            middleware.searchRecipes(values.query, values.check)
+            .then(response => {
                 setSearchResults(response.results);
+                setLoading(false);
+            })
+            .catch(error => {
+                swal("Error", "Something went wrong, please try again later", "error");
                 setLoading(false);
             });
         },
