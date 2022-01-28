@@ -1,6 +1,6 @@
 .Card {    
     border-radius: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 15px;    
 }
 
 .Card:hover {
@@ -18,36 +18,42 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+.CardImg {
+    cursor: pointer;
 }
 
 .EmptyCardImg {    
     filter: opacity(0.5);
     padding: 10px;
+    cursor: pointer;
 }
 
 .CardBody {
     padding: 10px;
 }
 
-.CardFooter {
-    text-align: center;    
-    padding: 5px 20px 5px 20px;
+.CardBody span {
+    margin-right: 10px;
+    cursor: pointer;
 }
 
-.ActionButton {
-    border-radius: 50%;
-    height: 40px; 
-    width: 40px;
-    padding: 0px;
-    filter: grayscale(.5);
+.BadgesContainer{
+    text-align: center;
 }
 
-.ItemData {
-    margin: 0;
-    padding: 0;
+.ActionButtonContainer{
+    text-align: center;
+    font-size: 18px;
+    padding: 1px;
 }
 
-.ItemData td{
-    border: none; 
-    line-height: 1;
+.ClearBadge {
+    background-color: rgba(150, 5, 5, 0.8)!important;
+}
+
+.ActionBadge {
+    background-color: rgba(100, 100, 100, 1)!important;
 }

@@ -21,8 +21,8 @@ const App = () => {
                             <Route exact path='/home' element={<PrivateRoute/>}>
                                 <Route exact path='/home' element={<Home/>}/>
                             </Route>
-                            <Route exact path='/search/:dishIndex' element={<PrivateRoute/>}>
-                                <Route exact path='/search/:dishIndex' element={<Search/>}/>
+                            <Route exact path='/search/:slotIndex' element={<PrivateRoute/>}>
+                                <Route exact path='/search/:slotIndex' element={<Search/>}/>
                             </Route>
                             <Route exact path='/details/:recipeId' element={<PrivateRoute/>}>
                                 <Route exact path='/details/:recipeId' element={<Details/>}/>

@@ -15,13 +15,19 @@ const Home = () => {
     const middleware  = useContext(MiddlewareContext);        
     const [menu, setMenu] = useState(middleware.getMenu());
 
-    const handleItemView = id => {
+    const handleItemSearch = index => {
+        middleware.setSelected(index);
+        navigate(`/search/${index}`);
+    }
+
+    const handleItemView = (index,id) => {
+        middleware.setSelected(index);
         navigate(`/details/${id}`);
     };
 
-    const handleClearRecipe = index => {
+    const handleItemClear = index => {
         swal("Are you sure you want to clear this recipe?", {
-            buttons: [false, true],
+            buttons: ["Cancel", true],
         }).then(value => {
             if(value){
                 const res = middleware.clearRecipe(index);
@@ -66,9 +72,9 @@ const Home = () => {
                     <Col xs={12} sm={6} md={4} lg={3} key={index}>
                         <ItemCard 
                             item={item} 
-                            onSearch={()=>navigate(`/search/${index}`)}
-                            onView={()=>handleItemView(item.id)}
-                            onClear={()=>handleClearRecipe(index)}/>
+                            onSearch={()=>handleItemSearch(index)}
+                            onView={()=>handleItemView(index, item.id)}
+                            onClear={()=>handleItemClear(index)}/>
                     </Col>
                 )}
             </Row>

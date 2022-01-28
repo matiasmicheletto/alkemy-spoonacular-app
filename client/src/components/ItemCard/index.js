@@ -1,5 +1,5 @@
-import { Button, Card, Row, Col, Table } from 'react-bootstrap';
-import { FaCartPlus, FaDollarSign, FaEye, FaHeart, FaRedo, FaSearch, FaTrashAlt } from 'react-icons/fa';
+import { Card, Badge } from 'react-bootstrap';
+import { FaCartPlus, FaDollarSign, FaHeart, FaSearch, FaTrashAlt, FaLeaf, FaEdit } from 'react-icons/fa';
 import dishImage from '../../img/dish.png';
 import classes from './style.module.css';
 
@@ -7,74 +7,72 @@ const ItemCard = props => {
 
     const {title, image, pricePerServing, healthScore, vegan} = props.item? props.item : {};
 
+    const handleItemView = () => {
+        if(title) 
+            props.onView();
+        else 
+            props.onSearch();
+    };
+
     return (
         <Card className={classes.Card}>
-            <Card.Header className={classes.CardHeader}>
-                <p className={classes.CardTitle} style={{color: title ? vegan ? 'green':'darkred' : 'black' }}>
+            <Card.Header className={classes.CardHeader} >
+                <div
+                    style={{padding:0}}
+                    title={title}
+                    className={classes.CardTitle} 
+                    style={{color: title ? vegan ? 'green':'darkred' : 'black' }}
+                    onClick={handleItemView}>
                     {title || 'Empty dish'}
-                </p>
+                </div>
             </Card.Header>
-            <Card.Img variant="top" src={image || dishImage} className={title ? "" : classes.EmptyCardImg}/>
+            <Card.Img 
+                variant="top" 
+                src={image || dishImage} 
+                className={title ? classes.CardImg : classes.EmptyCardImg}
+                onClick={handleItemView} />    
             <Card.Body className={classes.CardBody}>            
-                {pricePerServing && healthScore && <Table hover className={classes.ItemData}>
-                    <tbody>
-                        <tr title="Price">
-                            <td><FaDollarSign/></td>
-                            <td style={{textAlign:"right"}}>${pricePerServing}</td>
-                        </tr>
-                        <tr title="Health score">
-                            <td><FaHeart/></td>
-                            <td style={{textAlign:"right"}}>{healthScore}</td>
-                        </tr>
-                    </tbody>
-                </Table>}
-            </Card.Body>
-            <Card.Footer className={classes.CardFooter}>
-                <Row>
-                    {props.onView && <Col>
-                        <Button  
-                            title="View details"                        
-                            className={classes.ActionButton} 
-                            variant="primary" 
-                            disabled={!title}
-                            onClick={props.onView}>
-                            <FaEye size={25} />
-                        </Button>
-                    </Col>}
-                    {props.onSearch && <Col>
-                        <Button 
-                            title={title ? "Search recipe" : "Replace recipe"}
-                            className={classes.ActionButton} 
-                            variant="success"
+                {pricePerServing && healthScore && 
+                    <div className={classes.BadgesContainer}>
+                        <Badge title="Price per serving" pill bg="primary">
+                            <FaDollarSign />{pricePerServing}
+                        </Badge>
+                        <Badge title="Health score" pill bg="danger">
+                            <FaHeart /> {healthScore}
+                        </Badge>
+                        {vegan && <Badge title="Vegan recipe" pill bg="success"><FaLeaf /></Badge>}
+                    </div>
+                }
+                <div className={classes.ActionButtonContainer}>
+                    {title && props.onClear && 
+                        <Badge
+                            className={classes.ClearBadge}
+                            title="Clear recipe"                            
+                            onClick={props.onClear}>
+                            <FaTrashAlt /> Clear
+                        </Badge>
+                    }
+                    {props.onSearch && 
+                        <Badge 
+                            className={classes.ActionBadge}
+                            title={title ? "Edit recipe" : "Add recipe"}                                
                             onClick={props.onSearch}>
                             {title ? 
-                                <FaRedo size={25} />
+                                <><FaEdit /> Edit</>
                             :
-                                <FaSearch size={25} />
+                                <><FaSearch /> Browse</>
                             }
-                        </Button>
-                    </Col>}
-                    {props.onClear && <Col>
-                        <Button 
-                            title="Delete recipe"
-                            className={classes.ActionButton} 
-                            variant="danger"
-                            disabled={!title}
-                            onClick={props.onClear}>
-                            <FaTrashAlt size={25} />    
-                        </Button>
-                    </Col>}
-                    {props.onAdd && <Col>
-                        <Button 
-                            title="Add this recipe to the menu"
-                            className={classes.ActionButton} 
-                            variant="success"                        
+                        </Badge>}
+                    {props.onAdd && 
+                        <Badge 
+                            className={classes.ActionBadge}
+                            title="Add this recipe to the menu"                                                            
                             onClick={props.onAdd}>
-                            <FaCartPlus size={25} />    
-                        </Button>
-                    </Col>}
-                </Row>
-            </Card.Footer>
+                            <FaCartPlus /> Add to menu    
+                        </Badge>}
+                </div>
+            </Card.Body>
+
         </Card>
     );
 };

@@ -16,10 +16,10 @@ const Search = () => {
     const middleware  = useContext(MiddlewareContext);
     const [searchResults, setSearchResults] = useState(middleware.getLastSearch()?.results);
     const navigate = useNavigate();
-    const { dishIndex } = useParams();
+    const { slotIndex } = useParams(); // This parameter is in middleware.getSelected() too
 
     const handleAddItem = item => {                
-        const res = middleware.setMenuRecipe(item, dishIndex);
+        const res = middleware.setMenuRecipe(item, slotIndex);
         if(res.status === "success")
             navigate('/home/');
         else

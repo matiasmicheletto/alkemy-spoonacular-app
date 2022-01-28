@@ -1,3 +1,75 @@
-.Container {
-    margin-top: 80px;
+.Container {    
+    margin: 80px auto;
+    display: flex;
+    justify-content: center;    
+}
+
+.Card {
+    max-width: 800px;
+    word-wrap: normal;
+}
+
+.Image{        
+    float: left;
+    width: 50%;
+    min-width: 200px;
+    max-width: 500px;    
+    margin-right: 20px;
+}
+
+.Title {    
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.BadgesContainer span{
+    margin-right: 3px;
+}
+
+.Stats {
+    margin: 5px 10px;
+}
+
+.ActionBadgeContainer span{    
+    cursor: pointer;
+    animation: pulse 2s infinite, magnified 1s infinite;
+}
+
+.Description {
+    font-size: 14px;
+    margin: 10px;
+    text-align: justify;
+}
+
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(100,100,100,0.9);
+    }
+
+    70% {
+        -webkit-box-shadow: 0 0 0 5px rgba(100,100,100,0.1);
+    }
+
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(100,100,100, 0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(100,100,100, 0.9);
+        box-shadow: 0 0 0 0 rgba(100,100,100, 0.9);
+    }
+
+    70% {
+        -moz-box-shadow: 0 0 0 5px rgba(100,100,100, 0.1);
+        box-shadow: 0 0 0 5px rgba(100,100,100, 0.1);
+    }
+
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(100,100,100, 0);
+        box-shadow: 0 0 0 0 rgba(100,100,100, 0);
+    }
 }
