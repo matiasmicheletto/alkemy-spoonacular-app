@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/github/package-json/v/matiasmicheletto/alkemy-spoonacular-app">
 </p>
 
-### Aplicación disponible online [en este enlace](https://alkemy-spoonacular-app.herokuapp.com/)!
+### Aplicación disponible online [en este enlace](http://alkemy-spoonacular-app.herokuapp.com/)!
 
 
 ## Instalación

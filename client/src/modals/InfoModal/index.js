@@ -7,7 +7,7 @@ const InfoModal = props => (
         <p>This project was developed under the context of a front-end challenge by <a href="https://www.alkemy.org/">Alkemy</a>.</p>
         <br />
         <p><b>Author:</b> <a href="http://beacons.ai/matias.miche" target="_blank" rel="noopener noreferrer">Dr. Matías Micheletto</a></p>
-        <p><b>Source code:</b> <a href="https://github.com/matiasmicheletto/alkemy-spoonacular-challenge" target="_blank" rel="noopener noreferrer">https://github.com/matiasmicheletto/alkemy-spoonacular-challenge</a></p>
+        <p><b>Source code:</b> <a href="https://github.com/matiasmicheletto/alkemy-spoonacular-app" target="_blank" rel="noopener noreferrer">https://github.com/matiasmicheletto/alkemy-spoonacular-app</a></p>
         <p><b>License: </b> GPL-3.0</p>
         <br />
         <div style={{fontSize:10}}>
